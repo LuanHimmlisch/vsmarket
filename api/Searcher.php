@@ -1,12 +1,28 @@
 <?php
+/**
+ * The crawler that makes everything possible :D
+ */
 class Searcher{
+    private $search = "";
+    private $date = "";
     private $url = "";
     
+    /**
+     * 
+     * @param String $search The string to search
+     */
     function __construct($search){
+        if($search == "" || $search == null) throw new Exception("Search argument cannot be empty", 1);
+
+        $this->search = $search;
         $search = urlencode($search);
         $this->url = "https://www.google.com/search?q=$search";
+        $this->date = date("d-M-Y H:i:s");
     }
 
+    /**
+     * Runs the crawler
+     */
     function run(){
         define("banned",array_map("trim",explode("\n",file_get_contents("./banned.txt"))));
         $html = $this->call($this->url);
@@ -18,7 +34,7 @@ class Searcher{
         $titles = array_map(
             function($elem) {
                 preg_match('/(<h3 class="LC20lb DKV0Md".*?>)\K(.*?)(?=<\/h3>)/', $elem, $match);
-                return $match[0];
+                return strip_tags($match[0]);
             }
         , $out);
         
@@ -39,12 +55,12 @@ class Searcher{
         , $links);
         
         // Removes invisible tags
-        $sitesContent = array_map(function($elem){
-            $elem = trim(preg_replace('/\r+|\n+|\s+|\t+/', " ", $elem));
-            /*$elem = preg_replace('/<head.*?>(.*?)<\/head>/',"", $elem);*/
-            $elem = preg_replace('/<script.*?>(.*?)<\/script>/',"", $elem);
-            $elem = preg_replace('/<style.*?>(.*?)<\/style>/',"", $elem);
-            return strip_tags($elem);
+        $sitesContent = array_map(function($html){
+            $html = trim(preg_replace('/\r+|\n+|\s+|\t+/', " ", $html));
+            $html = preg_replace('/<script.*?>(.*?)<\/script>/',"", $html);
+            $html = preg_replace('/<style.*?>(.*?)<\/style>/',"", $html);
+            $html = strip_tags($html);
+            return $html;
         }, $sitesHTML);
         
         
@@ -105,31 +121,52 @@ class Searcher{
         $aTags = array_map(
             function($html) {
                 
-                preg_match_all('/(<a.*?>)\K(.*?)(?=<\/a>)/', $html, $a);
+                preg_match_all('/(<a.*?href=")\K(.*?)(?=")/', $html, $a);
 
-                $a = strip_tags($a[0]);
-
+                $a = array_map("strip_tags",$a[0]);
+                
                 return $a;
             }
         , $sitesHTML);
         
-        $result = array_map(function($title,$link,$h,$keywords){
+        // Gets OG images
+        $images = array_map(
+            function($html) {
+                preg_match('/("og:image".*?content=")\K(.*?)(?=")/', $html, $img);
+                return $img[0];
+            }
+        , $sitesHTML);
+        
+        $result = array_map(function($title,$link,$h,$a,$keyword,$img){
             return array(
                 "title" => $title,
                 "link" => $link,
+                "img" => $img,
                 "site" => [
                     "h1" => $h["1"],
                     "h2" => $h["2"],
-                    "keywords" => $keywords
+                    "a" => array_values(array_unique($a)),
+                    "keywords" => $keyword
                 ]
             );
-        }, $titles, $links, $hTags, $keywords);
+        }, $titles, $links, $hTags,$aTags ,$keywords, $images);
+        
+        $result = [
+            "search" => $this->search,
+            "date" => $this->date,
+            "sites" => $result
+        ];
         
         $result = json_encode($result,JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT);
 
         return $result;
     }
 
+    /**
+     * Gets the content of an URL
+     * 
+     * @param String $url The url to get the content
+     */
     protected function call($url){
         $curl = curl_init();
     

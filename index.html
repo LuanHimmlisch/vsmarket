@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-16">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="description" content="">
@@ -11,7 +11,7 @@
     <meta property="og:title" content="">
     <meta property="og:description" content="">
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="en_US">
+    <meta property="og:locale" content="es_MX">
     <meta property="fb:app_id" content="">
 
     <meta name="twitter:card" content="summary">
@@ -34,21 +34,23 @@
 </head>
 <body class="m-0;p-0">
     <header class="bg-white max-h-24 py-4 relative z-20 block">
-        <img src="./assets/logo.svg" class="h-16 inline-block ml-5" style="-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;" alt="Logo VS Market" class="text-center">
-        <label class="font-bold text-gray-700 text-2xl">Vs Market</label>
+        <a href="/" class="cursor-pointer">
+            <img src="./assets/logo.svg" class="h-16 inline-block ml-5" style="-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;" alt="Logo VS Market" class="text-center">
+            <label class="font-bold text-gray-700 text-2xl cursor-pointer">Vs Market</label>
+        </a>
         <nav class="w-full p-5">
-
+            
         </nav>
     </header>
     <main>
         <section class="bg-purple-900 overflow-hidden w-full max-h-96 py-72 flex relative justify-center items-center mb-10">
-            <form action="./api/index.php" class="text-center text-white inline-block pb-24 z-10" method="post">
+            <form action="./api/get" class="text-center text-white inline-block pb-24 z-10" method="get">
                 <h1 class="mb-5 text-4xl font-bold">Analiza el SEO de tus competidores</h1>
                 <p class="mb-5 text-xl">Óbten los keywords de los resultados más <i>hot</i>&#128293;</p>
-                <input type="text" name="s" class="rounded p-3 text-gray-600 outline-none w-full max-w-md" placeholder="Busca hasta 5 keywords..." pattern="^(\w+(\s){0,1}){1,5}">
+                <input type="text" name="s" class="rounded p-3 text-gray-600 outline-none w-full max-w-md" placeholder="Busca hasta 5 keywords..." pattern="^([A-zÁ-ú]+(\s){0,1}){1,5}" title="Only words, upto 5 keywords" required>
                 <button class="px-5 py-3 align-top rounded bg-purple-600 text-white outline-none transition-colors hover:bg-purple-500 font-bold" type="submit"><span class="mdi mdi-magnify"></span></button>
             </form>
-            <p class="animate-pulse italic text-white z-10 absolute bottom-56">Rastreando...</p>
+            <p class="animate-pulse italic text-white z-10 absolute bottom-56" id="flavor">Prueba con "Agencia desarrollo web"</p>
             <a href="https://www.freepik.es/wirestock" class="absolute bottom-0 right-1 underline bg-black text-s bg-opacity-30 text-white px-3 py-2 rounded-t opacity-50 transition-opacity hover:opacity-100 z-10">Wirestock</a>
             <img src="./assets/bg.jpg" class="w-screen h-full absolute bottom-0 z-0 m-0" style="-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;" alt="Foto por rawpixel.com">
         </section>
