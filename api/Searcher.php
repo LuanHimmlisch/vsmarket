@@ -50,7 +50,12 @@ class Searcher{
         // Gets sites from results
         $sitesHTML = array_map(
             function($link) {
-                return $this->call($link);
+                if(!preg_match("/facebook\.com/",$link)){
+                    return $this->call($link);
+                }
+                else{ 
+                    return "<h1>Facebook not allowed</h1>"; 
+                }
             }
         , $links);
         
@@ -67,7 +72,7 @@ class Searcher{
         // Gets all the words and
         $keywords = array_map(function($html){
             $allWords = explode(" ", $html);
-        
+
             $counts = array_count_values($allWords);
             
             $words = array_keys($counts);
@@ -80,16 +85,11 @@ class Searcher{
         
                 if(preg_match("/[a-zA-ZÁ-ú]/",$word) && !preg_match("/\n|\s|\r/",$word) && $word != "" && $word != null){
                     $insensitive = strtolower(preg_replace("/,/","",$word));
-                    try {
-                        if(!in_array($insensitive, banned) && !in_array($insensitive,$result)){
-                            array_push($result, [
-                                "count" => $count,
-                                "word" => $word
-                            ]);
-                        }
-                    } catch (Throwable $th) {
-                        header("location: /");
-                        exit();
+                    if(!in_array($insensitive, banned) && !in_array($insensitive,$result)){
+                        array_push($result, [
+                            "count" => $count,
+                            "word" => $word
+                        ]);
                     }
                 }
             }
@@ -112,10 +112,9 @@ class Searcher{
                 
                 preg_match_all('/(<h1.*?>)\K(.*?)(?=<\/h1>)/', $html, $h1);
                 preg_match_all('/(<h2.*?>)\K(.*?)(?=<\/h2>)/', $html, $h2);
-
                 $hs = [
-                    "1" => array_map("strip_tags",$h1[0]),
-                    "2" => array_map("strip_tags",$h2[0])
+                    "1" => array_map("strip_tags",$h1[0]??[]),
+                    "2" => array_map("strip_tags",$h2[0]??[])
                 ];
 
                 return $hs;
@@ -128,7 +127,7 @@ class Searcher{
                 
                 preg_match_all('/(<a.*?href=")\K(.*?)(?=")/', $html, $a);
 
-                $a = array_map("strip_tags",$a[0]);
+                $a = array_map("strip_tags",$a[0]??[]);
                 
                 return $a;
             }
@@ -141,7 +140,6 @@ class Searcher{
                 return $img[0];
             }
         , $sitesHTML);
-        
         $result = array_map(function($title,$link,$h,$a,$keyword,$img){
             return array(
                 "title" => $title,
@@ -162,8 +160,13 @@ class Searcher{
             "sites" => $result
         ];
         
+        array_walk_recursive(
+            $result, function (&$value){
+                $value = htmlspecialchars(html_entity_decode($value, ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'UTF-8');
+            }
+        );
+        
         $result = json_encode($result);
-
         return $result;
     }
 

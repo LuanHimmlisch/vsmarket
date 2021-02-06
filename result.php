@@ -38,25 +38,26 @@
     <title>VS Market - Resultados de competencia</title>
 </head>
 <body class="bg-purple-100">
-    <header class="bg-white max-h-24 py-4 relative z-20 block mb-10">
+    <header class="relative z-20 block py-4 mb-10 bg-white max-h-24">
         <a href="/" class="cursor-pointer">
-            <img src="./assets/logo.svg" class="h-16 inline-block ml-5" style="-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;" alt="Logo VS Market" class="text-center">
-            <label class="font-bold text-gray-700 text-2xl cursor-pointer">Vs Market</label>
+            <img src="./assets/logo.svg" class="inline-block h-16 ml-5" style="-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;" alt="Logo VS Market" class="text-center">
+            <label class="text-2xl font-bold text-gray-700 cursor-pointer">Vs Market</label>
         </a>
         <nav class="w-full p-5">
 
         </nav>
     </header>
-    <main class="container mx-auto px-20">
-        <h1 class="text-5xl mt-10 mb-2">Resultados de busqueda "<?=$sites["search"]?>"</h1>
+    <main class="container px-20 mx-auto">
+        <h1 class="mt-10 mb-2 text-5xl">Resultados de busqueda "<?=$sites["search"]?>"</h1>
         <p class="mb-10 italic text-gray-500">Consulta almacenada el <?=$sites["date"]?></p>
         <?php
         require __DIR__."/vendor/Templates.php";
         $id = 0;
         foreach ($sites["sites"] as $site) {
             $id++;
-            $img = $site["img"] ?? "./assets/notfound.jpg";
-
+            if($site["img"] == "" || $site["img"]== null) $img = "./assets/notfound.jpg";
+            else $img = $site["img"];
+            
             echo T::searchCard(
                 $id,
                 $site["title"],

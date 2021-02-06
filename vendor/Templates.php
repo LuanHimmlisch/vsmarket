@@ -23,14 +23,14 @@ class T {
 
 
         $content = "
-        <article class='max-w-full bg-white shadow p-5 rounded mb-6'>
+        <article class='max-w-full p-5 mb-6 break-words bg-white rounded shadow'>
             <div class='grid grid-cols-2'>
                 <div class=''>
                     <h2 class='text-xl font-bold'>$title</h2>
-                    <a href='$link' target='_blank' class='underline text-lg'>$link</a>
+                    <a href='$link' target='_blank' class='text-lg underline'>$link</a>
                     <p class='mt-2'>$description</p>
-                    <h3 class='text-lg font-bold mt-3'>Etiqueta(s) H1(s):</h3>
-                    <ul class='list-disc pl-5'>";
+                    <h3 class='mt-3 text-lg font-bold'>Etiqueta(s) H1(s):</h3>
+                    <ul class='pl-5 list-disc'>";
 
         foreach ($h1s as $h1) {
             $content .= "<li>$h1</li>";
@@ -38,8 +38,8 @@ class T {
 
         $content .= "
                     </ul>
-                    <h3 class='text-lg font-bold mt-3'>Etiqueta(s) H2(s):</h3>
-                    <ul class='list-disc pl-5 mb-5'>";
+                    <h3 class='mt-3 text-lg font-bold'>Etiqueta(s) H2(s):</h3>
+                    <ul class='pl-5 mb-5 list-disc'>";
         
         foreach ($h2s as $h2) {
             $content .= "<li>$h2</li>";
@@ -48,14 +48,14 @@ class T {
         $content .= "
                     </ul>
                 </div>
-                <img class='max-h-full max-w-full border-8 border-purple-400 ml-auto' src='$image' alt='$title'>
+                <img class='max-w-full max-h-full ml-auto border-8 border-purple-400' src='$image' alt='$title'>
             </div>
             <div class='extra'>
-                <button class='text-white px-5 py-3 rounded bg-purple-500 transition-colors' onclick='extra($id,this)'>Mostrar</button>
-                <section class='transition-all hidden' id='extra-$id'>
-                    <hr class='max-w-md border-1 border-gray-300 border-solid my-5'>
+                <button class='px-5 py-3 text-white transition-colors bg-purple-500 rounded' onclick='extra($id,this)'>Mostrar</button>
+                <section class='hidden transition-all' id='extra-$id'>
+                    <hr class='max-w-md my-5 border-gray-300 border-solid border-1'>
                     <div class=''>
-                        <h3 class='text-3xl font-bold mb-6'>Keywords:</h3>";
+                        <h3 class='mb-6 text-3xl font-bold'>Keywords:</h3>";
         
         for ($i=0; $i < count($keywords); $i++) { 
             $keyword = $keywords[$i];
@@ -65,7 +65,7 @@ class T {
             if($i<count($emojis)) $emoji = $emojis[$i];
             
             $content .= "
-            <div class='max-w-full bg-gray-100 p-5 rounded mb-3 grid grid-cols-3 transition-transform block text-center items-center'>
+            <div class='grid items-center block max-w-full grid-cols-3 p-5 mb-3 text-center transition-transform bg-gray-100 rounded'>
                 <h4 class='text-4xl'>$emoji ".($i+1)."°</h4><h5 class='text-3xl font-bold'>$word</h5> <p><b>$count</b> veces</p>
             </div>
             ";
@@ -73,11 +73,11 @@ class T {
 
         $content .= "
                     </div>
-                    <hr class='max-w-md border-1 border-gray-300 border-solid my-5'>
+                    <hr class='max-w-md my-5 border-gray-300 border-solid border-1'>
                     <div class=''>
-                        <h3 class='text-3xl font-bold mb-6'>Backlinks:</h3>
+                        <h3 class='mb-6 text-3xl font-bold'>Backlinks:</h3>
                         <p class='text-gray-500'>&#x26a0; <i>No nos hacemos responsables del contenido de los links</i></p>
-                        <ul class='list-disc pl-5 my-5'>";
+                        <ul class='pl-5 my-5 list-disc'>";
         
                         foreach ($backlinks as $backlink) {
                             $content .= "<li>$backlink</li>";
