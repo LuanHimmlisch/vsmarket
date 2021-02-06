@@ -80,11 +80,16 @@ class Searcher{
         
                 if(preg_match("/[a-zA-ZÁ-ú]/",$word) && !preg_match("/\n|\s|\r/",$word) && $word != "" && $word != null){
                     $insensitive = strtolower(preg_replace("/,/","",$word));
-                    if(!in_array($insensitive, banned) && !in_array($insensitive,$result)){
-                        array_push($result, [
-                            "count" => $count,
-                            "word" => $word
-                        ]);
+                    try {
+                        if(!in_array($insensitive, banned) && !in_array($insensitive,$result)){
+                            array_push($result, [
+                                "count" => $count,
+                                "word" => $word
+                            ]);
+                        }
+                    } catch (Throwable $th) {
+                        header("location: /");
+                        exit();
                     }
                 }
             }
@@ -157,7 +162,7 @@ class Searcher{
             "sites" => $result
         ];
         
-        $result = json_encode($result,JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT);
+        $result = json_encode($result);
 
         return $result;
     }

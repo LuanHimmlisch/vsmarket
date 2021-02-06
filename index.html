@@ -48,6 +48,7 @@
                 <h1 class="mb-5 text-4xl font-bold">Analiza el SEO de tus competidores</h1>
                 <p class="mb-5 text-xl">Óbten los keywords de los resultados más <i>hot</i>&#128293;</p>
                 <input type="text" name="s" class="rounded p-3 text-gray-600 outline-none w-full max-w-md" placeholder="Busca hasta 5 keywords..." pattern="^([A-zÁ-ú]+(\s){0,1}){1,5}" title="Only words, upto 5 keywords" required>
+                <input type="text" name="email" id="email">
                 <button class="px-5 py-3 align-top rounded bg-purple-600 text-white outline-none transition-colors hover:bg-purple-500 font-bold" type="submit"><span class="mdi mdi-magnify"></span></button>
             </form>
             <p class="animate-pulse italic text-white z-10 absolute bottom-56" id="flavor">Prueba con "Agencia desarrollo web"</p>
@@ -77,5 +78,12 @@
     <footer class="bg-gray-700 text-white p-20">
 
     </footer>
+    <style>
+        #email{
+            position: absolute;
+            left: -99999px;
+            top: -99999px;
+        }
+    </style>
 </body>
 </html>

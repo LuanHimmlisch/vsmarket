@@ -49,4 +49,5 @@ RewriteRule "(^|/)\." - [F]
 ####### Config #######
 
 SetEnv TZ America/Mexico_City
+php_value date.timezone 'America/Mexico_City'
 DefaultLanguage es-MX

@@ -1,5 +1,6 @@
 <?php
 if(!isset($_GET["s"]) 
+|| !empty($_GET["email"])
 || $_GET["s"] == "" 
 || $_GET["s"] == null){
     header("location: /");
@@ -10,20 +11,22 @@ preg_match("/^([A-zÁ-ú]+(\s){0,1}){1,5}/",$_GET["s"],$search);
 define("search", $search[0]);
 define("path",__DIR__."/../cache/".search.".json");
 
+CONST minutes = 60;
+
 function expired(){
     require "./Searcher.php";
     $api = new Searcher(search);
     
     $content = $api->run();
-
-    file_put_contents(path,$content);
+    
+    if($content != null && $content != "") file_put_contents(path,$content);
 
     return $content;
 }
 
 if(file_exists(path)){
     $fileTime = filemtime(path);
-    if($fileTime != false && time() - $fileTime > 30*60){
+    if($fileTime != false && time() - $fileTime > minutes*60){
         $content = expired();
     }else{
         $content = file_get_contents(path);
