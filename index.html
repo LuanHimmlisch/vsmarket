@@ -24,29 +24,56 @@
     <meta name="yandex-verification" content="" />
     <meta name="msvalidate.01" content="" />
 
-    <link rel="shortcut icon" href="" type="image/x-icon">
+    <link rel="shortcut icon" href="./assets/logo.svg" type="image/x-icon">
     <link rel="canonical" href="https://">
 
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <title>VS Market</title>
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+
+    <title>VS Market - Analizador SEO de competencia</title>
 </head>
-<body>
-    <header>
-        <img src="" alt="">
-        <nav>
+<body class="m-0;p-0">
+    <header class="bg-white max-h-24 py-4 relative z-20 block">
+        <img src="./assets/logo.svg" class="h-16 inline-block ml-5" style="-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;" alt="Logo VS Market" class="text-center">
+        <label class="font-bold text-gray-700 text-2xl">Vs Market</label>
+        <nav class="w-full p-5">
 
         </nav>
     </header>
     <main>
-        <section>
-            <h1></h1>
-            <form action="./api/index.php" method="post">
-
+        <section class="bg-purple-900 overflow-hidden w-full max-h-96 py-72 flex relative justify-center items-center mb-10">
+            <form action="./api/index.php" class="text-center text-white inline-block pb-24 z-10" method="post">
+                <h1 class="mb-5 text-4xl font-bold">Analiza el SEO de tus competidores</h1>
+                <p class="mb-5 text-xl">Óbten los keywords de los resultados más <i>hot</i>&#128293;</p>
+                <input type="text" name="s" class="rounded p-3 text-gray-600 outline-none w-full max-w-md" placeholder="Busca hasta 5 keywords..." pattern="^(\w+(\s){0,1}){1,5}">
+                <button class="px-5 py-3 align-top rounded bg-purple-600 text-white outline-none transition-colors hover:bg-purple-500 font-bold" type="submit"><span class="mdi mdi-magnify"></span></button>
             </form>
+            <p class="animate-pulse italic text-white z-10 absolute bottom-56">Rastreando...</p>
+            <a href="https://www.freepik.es/wirestock" class="absolute bottom-0 right-1 underline bg-black text-s bg-opacity-30 text-white px-3 py-2 rounded-t opacity-50 transition-opacity hover:opacity-100 z-10">Wirestock</a>
+            <img src="./assets/bg.jpg" class="w-screen h-full absolute bottom-0 z-0 m-0" style="-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;" alt="Foto por rawpixel.com">
         </section>
-        <section>
-
+        <section class="mb-16 min-h-screen p-10 lg:p-20 bg-white">
+            <div class="block text-center mb-5">
+                <h2 class="text-4xl font-bold text-gray-700 mb-5">¿Cómo funciona?</h2>
+                <hr class="max-w-md mx-auto border-2 border-purple-600 border-solid">
+            </div>
+            <div class="text-center block lg:flex lg: lg:items-center">
+                <img class="inline-block" src="./assets/about.svg" alt="">
+                <div class="lg:ml-10">
+                    <p class="text-gray-600 text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa a, maiores illum soluta itaque eius. Doloribus explicabo impedit architecto qui suscipit! Assumenda voluptas voluptatum magni sapiente aperiam odio quibusdam quisquam dicta libero fugiat. Earum nemo minima qui deleniti temporibus! Fugiat illum necessitatibus magnam hic cum unde odit aut dicta dolores quia temporibus quo animi ullam iure qui maxime amet, iusto adipisci rerum assumenda consectetur voluptates quis? Cumque quas consequatur rerum repellendus ab, neque odit nostrum id vitae aliquid quidem tenetur quod dolorum magnam, nobis suscipit. Dolor voluptate explicabo incidunt non voluptas soluta recusandae nisi facilis sint vel illum aperiam, veniam ex expedita aliquam, eligendi adipisci ducimus repellendus laudantium consectetur aut asperiores autem numquam! Minus sequi temporibus ullam voluptates eaque maiores omnis atque placeat similique? Reiciendis temporibus esse sunt fuga, numquam nemo beatae quia modi tempore! Perferendis corrupti sapiente asperiores non soluta sequi consequatur praesentium esse! Consequuntur temporibus vel sint facere illum labore id nam natus rem ipsum saepe laudantium ea iusto enim maiores omnis quam, excepturi numquam dignissimos amet deleniti voluptatibus nostrum! Ratione debitis incidunt obcaecati optio iusto repellendus a iure adipisci unde magni, fugit mollitia laboriosam quo alias itaque reiciendis illo inventore suscipit, rem dignissimos saepe fugiat vero! Aut!</p>
+                </div>
+            </div>
+        </section>
+        <section class="p-20 lg:p-32 bg-gray-100 lg:flex lg:items-center">
+            <div class="">
+                <h2 class="text-gray-700 text-7xl mb-5">¡Colabora!</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, veniam! Cumque quisquam incidunt dolorum? Aliquam harum quam consectetur ipsa ducimus commodi rerum! Porro nesciunt accusantium dolores culpa reiciendis quisquam temporibus.</p>
+            </div>
+            <a href="https://github.com/LuanHimmlisch/vsmarket" class="text-9xl text-gray-700 transition-colors hover:text-purple-800 lg:mr-32 lg:ml-52" target="_blank"><span class="mdi mdi-github lg:inline block text-center"></span></a>
         </section>
     </main>
+    <footer class="bg-gray-700 text-white p-20">
+
+    </footer>
 </body>
 </html>

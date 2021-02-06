@@ -17,51 +17,35 @@ class Searcher{
         // Gets the titles
         $titles = array_map(
             function($elem) {
-                preg_match('/<h3 class="LC20lb DKV0Md".*?>(.*?)<\/h3>/', $elem, $match);
+                preg_match('/(<h3 class="LC20lb DKV0Md".*?>)\K(.*?)(?=<\/h3>)/', $elem, $match);
                 return $match[0];
             }
         , $out);
-        
-        // Removes the styling
-        $titles = array_map(
-            function($elem){
-                $elem = preg_replace('/(<h3 class="LC20lb DKV0Md".*?><span>)|(<\/span><\/h3>)/',"", $elem);
-                return $elem;
-            }
-        , $titles);
         
         // Gets the links
         $links = array_map(
             function($elem) {
-                preg_match('/href=(.*?) data-ved/', $elem, $match);
+                preg_match('/(href=.*?")\K(.*?)(?=")/', $elem, $match);
                 return $match[0];
             }
         , $out);
         
-        // Removes the styling
-        $links = array_map(
-            function($elem){
-                $elem = preg_replace('/(href=")|(" data-ved)/',"", $elem);
-                return $elem;
-            }
-        , $links);
         
-        
-        // Gets pages from results
-        $keywords = array_map(
+        // Gets sites from results
+        $sitesHTML = array_map(
             function($link) {
                 return $this->call($link);
             }
         , $links);
         
-        // Removes tags
-        $keywords = array_map(function($elem){
+        // Removes invisible tags
+        $sitesContent = array_map(function($elem){
             $elem = trim(preg_replace('/\r+|\n+|\s+|\t+/', " ", $elem));
             /*$elem = preg_replace('/<head.*?>(.*?)<\/head>/',"", $elem);*/
             $elem = preg_replace('/<script.*?>(.*?)<\/script>/',"", $elem);
             $elem = preg_replace('/<style.*?>(.*?)<\/style>/',"", $elem);
             return strip_tags($elem);
-        }, $keywords);
+        }, $sitesHTML);
         
         
         // Gets all the words and
@@ -89,7 +73,7 @@ class Searcher{
                 }
             }
             return $result;
-        }, $keywords);
+        }, $sitesContent);
         
         // Sorts the array
         $keywords = array_map(function($key){
@@ -101,14 +85,45 @@ class Searcher{
             return $key;
         },$keywords);
         
+        // Gets all the H1 and H2 tags
+        $hTags = array_map(
+            function($html) {
+                
+                preg_match_all('/(<h1.*?>)\K(.*?)(?=<\/h1>)/', $html, $h1);
+                preg_match_all('/(<h2.*?>)\K(.*?)(?=<\/h2>)/', $html, $h2);
+
+                $hs = [
+                    "1" => array_map("strip_tags",$h1[0]),
+                    "2" => array_map("strip_tags",$h2[0])
+                ];
+
+                return $hs;
+            }
+        , $sitesHTML);
+
+        // Gets all the a tags
+        $aTags = array_map(
+            function($html) {
+                
+                preg_match_all('/(<a.*?>)\K(.*?)(?=<\/a>)/', $html, $a);
+
+                $a = strip_tags($a[0]);
+
+                return $a;
+            }
+        , $sitesHTML);
         
-        $result = array_map(function($title,$link, $keywords){
+        $result = array_map(function($title,$link,$h,$keywords){
             return array(
                 "title" => $title,
                 "link" => $link,
-                "keywords" => $keywords
+                "site" => [
+                    "h1" => $h["1"],
+                    "h2" => $h["2"],
+                    "keywords" => $keywords
+                ]
             );
-        }, $titles, $links, $keywords);
+        }, $titles, $links, $hTags, $keywords);
         
         $result = json_encode($result,JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT);
 
