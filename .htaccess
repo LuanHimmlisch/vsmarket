@@ -11,8 +11,8 @@ Header add X-Frame-Options "SAMEORIGIN"
 ####### URLs #######
 
 # CANON
-RewriteCond %{HTTP_HOST} ^[^.]+\.[^.]+$
-RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [L,R=301]
+# RewriteCond %{HTTP_HOST} ^[^.]+\.[^.]+$
+# RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [L,R=301]
 
 # PHP
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.php [NC]
