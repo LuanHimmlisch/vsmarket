@@ -47,7 +47,7 @@
 
         </nav>
     </header>
-    <main class="container px-20 mx-auto">
+    <main class="container mx-auto lg:px-20">
         <h1 class="mt-10 mb-2 text-5xl">Resultados de busqueda "<?=$sites["search"]?>"</h1>
         <p class="mb-10 italic text-gray-500">Consulta almacenada el <?=$sites["date"]?></p>
         <?php
@@ -73,7 +73,10 @@
         
         ?>
     </main>
-
+    <footer class="p-20 text-center text-white bg-gray-700">
+        <p>Vs Market por <a href="https://luanhimmlisch.github.io/" target="_blank" class="underline">Luan Himmlisch</a>. Proyecto bajo licencia <a href="./LICENSE" class="font-bold underline">GNU V3</a></p>
+        <p>Servicios web en <a href="https://himmlischweb.tk" target="_blank" class="underline">Himmlisch web</a>.</p>
+    </footer>
     <script>
         function extra(num,button){
             const elem = document.querySelector("#extra-"+num);
