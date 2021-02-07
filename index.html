@@ -43,15 +43,18 @@
         </nav>
     </header>
     <main>
+        <div id="loading" class="fixed z-10 hidden w-full bottom-2">
+            <p class="max-w-screen-md px-4 py-3 mx-auto text-center text-white bg-indigo-600 rounded">Obteniendo información, esto puede tardar unos segundos...</p>
+        </div>
         <section class="relative flex items-center justify-center w-full mb-10 overflow-hidden bg-purple-900 max-h-96 py-72">
-            <form action="./api/get" class="z-10 inline-block pb-24 text-center text-white" method="get">
-                <h1 class="mb-5 text-4xl font-bold">Analiza el SEO de tus competidores</h1>
-                <p class="mb-5 text-xl">Óbten las palabras claves de las páginas más <i>exitosas</i>&#128293;</p>
+            <form action="./api/get" class="z-10 inline-block pb-24 text-center text-white" method="get" id="searchForm">
+                <h1 class="mb-5 text-4xl font-bold" style=" text-shadow: 0px 0px 5px rgba(0, 0, 0,0.3);">Analiza el SEO de tus competidores</h1>
+                <p class="mb-5 text-xl" style=" text-shadow: 0px 0px 2px rgba(0, 0, 0,0.5);">Obtén las palabras claves de las páginas más <i>exitosas</i>&#128293;</p>
                 <input type="text" name="s" class="w-full max-w-md p-3 text-gray-600 rounded outline-none" placeholder="Busca hasta 5 keywords..." pattern="^([A-zÁ-ú]+(\s){0,1}){1,5}" title="Hasta 5 palabras sin caracteres especiales" required>
                 <input type="text" name="email" id="email">
                 <button class="block w-full px-5 py-3 font-bold text-center text-white align-top transition-colors bg-purple-600 rounded outline-none lg:w-auto lg:inline hover:bg-purple-500" type="submit"><span class="mdi mdi-magnify"></span></button>
             </form>
-            <p class="absolute z-10 italic text-white animate-pulse bottom-24 lg:bottom-56" id="flavor">Prueba con "Agencia desarrollo web"</p>
+            <p class="absolute z-10 italic text-white animate-pulse bottom-24 lg:bottom-56" id="flavor">Prueba con <b>"Agencia desarrollo web"</b></p>
             <a href="https://www.freepik.es/wirestock" class="absolute bottom-0 z-10 px-3 py-2 text-white underline transition-opacity bg-black rounded-t opacity-50 right-1 text-s bg-opacity-30 hover:opacity-100">Wirestock</a>
             <img src="./assets/bg.jpg" class="absolute bottom-0 z-0 w-screen h-full m-0" style="-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;" alt="Foto por rawpixel.com">
         </section>
@@ -92,11 +95,38 @@
         <p>Vs Market por <a href="https://luanhimmlisch.github.io/" target="_blank" class="underline">Luan Himmlisch</a>. Proyecto bajo licencia <a href="./LICENSE" class="font-bold underline">GNU V3</a></p>
         <p>Servicios web en <a href="https://himmlischweb.tk" target="_blank" class="underline">Himmlisch web</a>.</p>
     </footer>
+    <script defer>
+        const submit = document.getElementById("searchForm");
+        submit.addEventListener("submit",()=>{
+           const popup = document.getElementById("loading");
+           if(popup.classList.contains("hidden")) popup.classList.remove("hidden");
+        });
+    </script>
     <style>
         #email{
             position: absolute;
             left: -99999px;
             top: -99999px;
+        }
+        #loading{
+            animation-name: loading;
+            animation-iteration-count: infinite;
+            animation-duration: 3s;
+            opacity: 0;
+        }
+        @keyframes loading {
+            0%{
+                opacity: 0;
+            }
+            45%{
+                opacity: 1;
+            }
+            55%{
+                opacity: 1;
+            }
+            100%{
+                opacity: 0;
+            }
         }
     </style>
 </body>
