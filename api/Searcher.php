@@ -6,17 +6,18 @@ class Searcher{
     private $search = "";
     private $date = "";
     private $url = "";
-    
+    private $customHeaders = [];
     /**
      * 
      * @param String $search The string to search
      */
-    function __construct($search){
+    function __construct($search, $customHeaders = []){
         if($search == "" || $search == null) throw new Exception("Search argument cannot be empty", 1);
 
         $this->search = $search;
         $search = urlencode($search);
         $this->url = "https://www.google.com/search?q=$search";
+        $this->customHeaders = $customHeaders;
         $this->date = date("d-M-Y H:i:s");
     }
 
@@ -24,8 +25,11 @@ class Searcher{
      * Runs the crawler
      */
     function run(){
+        // Caution with this function
+        set_time_limit(120);
+        
         define("banned",array_map("trim",explode("\n",file_get_contents("./banned.txt"))));
-        $html = $this->call($this->url);
+        $html = $this->call($this->url,$this->customHeaders);
         
         preg_match_all('/<div class="g".*?>(.*?)<\/div>/',$html,$out);
         $out = $out[0];
@@ -51,7 +55,7 @@ class Searcher{
         $sitesHTML = array_map(
             function($link) {
                 if(!preg_match("/facebook\.com/",$link)){
-                    return $this->call($link);
+                    return $this->call($link,$this->customHeaders);
                 }
                 else{ 
                     return "<h1>Facebook not allowed</h1>"; 
@@ -175,7 +179,7 @@ class Searcher{
      * 
      * @param String $url The url to get the content
      */
-    protected function call($url){
+    protected function call($url,$customHeaders = []){
         $curl = curl_init();
     
         curl_setopt_array($curl, array(
@@ -187,6 +191,7 @@ class Searcher{
           CURLOPT_FOLLOWLOCATION => true,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => 'GET',
+          CURLOPT_HTTPHEADER => $customHeaders,
           CURLOPT_USERAGENT => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36"
         ));
         

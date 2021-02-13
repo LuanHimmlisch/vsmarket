@@ -29,7 +29,7 @@ class T {
                     <h2 class='text-xl font-bold'>$title</h2>
                     <a href='$link' target='_blank' class='text-lg underline'>$link</a>
                     <p class='mt-2'>$description</p>
-                    <h3 class='mt-3 text-lg font-bold'>Etiqueta(s) H1(s):</h3>
+                    <h3 class='mt-3 text-lg font-bold'>H1(s) tag(s):</h3>
                     <ul class='pl-5 list-disc'>";
 
         foreach ($h1s as $h1) {
@@ -38,7 +38,7 @@ class T {
 
         $content .= "
                     </ul>
-                    <h3 class='mt-3 text-lg font-bold'>Etiqueta(s) H2(s):</h3>
+                    <h3 class='mt-3 text-lg font-bold'>H2(s) tag(s):</h3>
                     <ul class='pl-5 mb-5 list-disc'>";
         
         foreach ($h2s as $h2) {
@@ -51,7 +51,7 @@ class T {
                 <img class='max-w-full max-h-full ml-auto border-8 border-purple-400' src='$image' alt='$title'>
             </div>
             <div class='extra'>
-                <button class='px-5 py-3 text-white transition-colors bg-purple-500 rounded' onclick='extra($id,this)'>Mostrar</button>
+                <button class='px-5 py-3 text-white transition-colors bg-purple-500 rounded' onclick='extra($id,this)'>Show more</button>
                 <section class='hidden transition-all' id='extra-$id'>
                     <hr class='max-w-md my-5 border-gray-300 border-solid border-1'>
                     <div class=''>
@@ -76,7 +76,7 @@ class T {
                     <hr class='max-w-md my-5 border-gray-300 border-solid border-1'>
                     <div class=''>
                         <h3 class='mb-6 text-3xl font-bold'>Backlinks:</h3>
-                        <p class='text-gray-500'>&#x26a0; <i>No nos hacemos responsables del contenido de los links</i></p>
+                        <p class='text-gray-500'>&#x26a0; <i>We are not responsable for the content of the links</i></p>
                         <ul class='pl-5 my-5 list-disc'>";
         
                         foreach ($backlinks as $backlink) {

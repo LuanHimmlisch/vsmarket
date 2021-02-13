@@ -3,4 +3,5 @@ Disallow: /api/
 Disallow: /cache/
 Disallow: /examples/
 Disallow: /vendor/
+Disallow: /lang/
 Disallow: /result

@@ -1,13 +1,12 @@
 <?php
-    session_start(); 
+    require __DIR__."/lang/lang.php";
+    if(!isset($_SESSION)) session_start(); 
     if(!isset($_SESSION["search_result"])){
         header("location: /");
         exit();
     }
     $sites = $_SESSION["search_result"];
 ?>
-<!DOCTYPE html>
-<html lang="en">
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -74,8 +73,8 @@
         ?>
     </main>
     <footer class="p-20 text-center text-white bg-gray-700">
-        <p>Vs Market por <a href="https://luanhimmlisch.github.io/" target="_blank" class="underline">Luan Himmlisch</a>. Proyecto bajo licencia <a href="./LICENSE" class="font-bold underline">GNU V3</a></p>
-        <p>Servicios web en <a href="https://himmlischweb.tk" target="_blank" class="underline">Himmlisch web</a>.</p>
+        <p><?=LOCALE["footer:credits"]?></p>
+        <p><?=LOCALE["footer:more"]?></p>
     </footer>
     <script>
         function extra(num,button){
@@ -86,12 +85,12 @@
                 elem.classList.remove("hidden");
                 button.classList.remove("bg-purple-500");
                 button.classList.add("bg-blue-300");
-                button.innerHTML = "Ocultar";
+                button.innerHTML = "Show less";
             }else{
                 elem.classList.add("hidden");
                 button.classList.remove("bg-blue-300");
                 button.classList.add("bg-purple-500");
-                button.innerHTML = "Mostrar";
+                button.innerHTML = "Show more";
             }
         }
     </script>

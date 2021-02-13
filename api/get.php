@@ -6,30 +6,33 @@ if(!isset($_GET["s"])
     header("location: /");
     exit();
 }
+require __DIR__."/../lang/lang.php";
 
 preg_match("/^([A-zÁ-ú]+(\s){0,1}){1,5}/",$_GET["s"],$search);
-define("search", $search[0]);
-define("path",__DIR__."/../cache/".search.".json");
+define("SEARCH", $search[0]);
+define("PATH",__DIR__."/../cache/".LANG." - ".SEARCH.".json");
 
-CONST minutes = 60;
+CONST MINUTES = 60;
 
 function expired(){
     require "./Searcher.php";
-    $api = new Searcher(search);
+    $api = new Searcher(SEARCH,[
+        "Accept-Language: ".LANG,
+    ]);
     
     $content = $api->run();
     
-    if($content != null && $content != "") file_put_contents(path,$content);
+    if($content != null && $content != "") file_put_contents(PATH,$content);
 
     return $content;
 }
 
-if(file_exists(path)){
-    $fileTime = filemtime(path);
-    if($fileTime != false && time() - $fileTime > minutes*60){
+if(file_exists(PATH)){
+    $fileTime = filemtime(PATH);
+    if($fileTime != false && time() - $fileTime > MINUTES*60){
         $content = expired();
     }else{
-        $content = file_get_contents(path);
+        $content = file_get_contents(PATH);
     }
 }else{
     $content = expired();
